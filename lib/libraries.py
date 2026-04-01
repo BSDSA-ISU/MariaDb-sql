@@ -1,4 +1,5 @@
 # Insertion and entering
+import sys
 import mariadb
 from dotenv import load_dotenv
 import os
@@ -9,12 +10,16 @@ db_user = os.getenv("DB_USER")
 db_password = os.getenv("DB_PASS")
 db_database = os.getenv("DB_DATABASE")
 
-conn = mariadb.connect(
-    user=db_user,
-    password=db_password,
-    host="localhost",
-    database=db_database
-)
+try:
+    conn = mariadb.connect(
+        user=db_user,
+        password=db_password,
+        host="localhost",
+        database=db_database
+    )
+except Exception:
+    print("you suck! run mariadb server!")
+    sys.exit(1)
 
 curr = conn.cursor()
 
@@ -38,4 +43,15 @@ def delete(ID : int):
 def edit():
     print("soon lol")
 
-delete(9)
+def search(search):
+    sql =  f""" SELECT *
+        FROM passwords
+        WHERE website LIKE %s;
+        """
+    
+    curr.execute(sql, (f"%{search}%",))
+    
+    results = curr.fetchall()
+
+    for row in results:
+        print(row)
