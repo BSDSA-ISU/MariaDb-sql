@@ -1,3 +1,5 @@
 .env
 *env
 initialize_key
+uv.lock
+__pycache__
