@@ -24,6 +24,22 @@ except Exception:
 
 curr = conn.cursor()
 
+if not os.path.isfile("initialize_key"):
+    print("First run...")
+    sql_init = """
+             CREATE TABLE IF NOT EXISTS passwords (
+             id INT AUTO_INCREMENT PRIMARY KEY,
+             username varchar(255),
+             password varchar(255),
+             website varchar(255)
+             );
+    """
+
+    curr.execute(sql_init)
+
+    conn.commit()
+    open("initialize_key", "w")
+
 def insert(username, password, website):
     sql = """
         INSERT INTO passwords 
@@ -43,6 +59,13 @@ def delete(ID : int):
 
 def edit():
     print("soon lol")
+    
+    """
+    UPDATE table_name
+SET column1 = 'new_value', column2 = 'new_value'
+WHERE id_column = 123;
+
+    """
 
 def search(search):
     sql =  f""" SELECT *
