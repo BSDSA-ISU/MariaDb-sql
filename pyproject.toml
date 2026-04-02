@@ -7,4 +7,6 @@ requires-python = ">=3.14"
 dependencies = [
     "dotenv>=0.9.9",
     "mariadb>=1.1.14",
+    "pymysql>=1.1.2",
+    "tabulate>=0.10.0",
 ]

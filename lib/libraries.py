@@ -1,8 +1,9 @@
 # Insertion and entering
 import sys
-import mariadb
+import pymysql
 from dotenv import load_dotenv
 import os
+from tabulate import tabulate
 
 load_dotenv()
 
@@ -11,14 +12,14 @@ db_password = os.getenv("DB_PASS")
 db_database = os.getenv("DB_DATABASE")
 
 try:
-    conn = mariadb.connect(
+    conn = pymysql.connect(
         user=db_user,
         password=db_password,
         host="localhost",
         database=db_database
     )
 except Exception:
-    print("you suck! run mariadb server!")
+    print("you suck! run mariadb or mysql server!")
     sys.exit(1)
 
 curr = conn.cursor()
@@ -53,5 +54,7 @@ def search(search):
     
     results = curr.fetchall()
 
-    for row in results:
-        print(row)
+    print(tabulate(results, headers=["username", "password", "website"], tablefmt="psql"))
+
+if __name__ == "__main__":
+    search("a")
