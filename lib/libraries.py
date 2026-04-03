@@ -24,21 +24,18 @@ except Exception:
 
 curr = conn.cursor()
 
-if not os.path.isfile("initialize_key"):
-    print("First run...")
-    sql_init = """
+sql_init = """
              CREATE TABLE IF NOT EXISTS passwords (
              id INT AUTO_INCREMENT PRIMARY KEY,
              username varchar(255),
              password varchar(255),
              website varchar(255)
              );
-    """
+"""
 
-    curr.execute(sql_init)
+curr.execute(sql_init)
 
-    conn.commit()
-    open("initialize_key", "w")
+conn.commit()
 
 def insert(username, password, website):
     sql = """
@@ -57,7 +54,7 @@ def delete(ID : int):
     conn.commit()
     print(f"Deleted {curr.rowcount} row(s).")
 
-def edit(id : int, username = "None", password = "None", website = "None"):
+def edit(id : int, username = None, password = None, website = None):
 
     edits = """
     UPDATE passwords
@@ -65,27 +62,31 @@ def edit(id : int, username = "None", password = "None", website = "None"):
         WHERE id = %s;
     """
         
-    sql =  f""" SELECT *
+    sql =  """ SELECT *
         FROM passwords
-        WHERE id %s;
+        WHERE id=%s;
         """
     
     curr.execute(sql, (id,))
     
     results = curr.fetchone()
 
+    if results is None:
+        print("no such id.. try again")
+        return
+
     default_user = results[1]
     default_password = results[2]
     default_website = results[3]
 
-    if username == "None":
+    if username is None:
         username = default_user
-    if password == "None":
+    if password is None:
         password = default_password
-    if website == "None":
+    if website is None:
         website = default_website   
 
-    if username == default_user and password == default_password and website == default_website:
+    if username is default_user and password is default_password and website is default_website:
         username = input("Insert new username(Leave blank for default)\n>>")
         if username == "":
             username = default_user
@@ -119,4 +120,4 @@ def search(search):
     print(tabulate(results, headers=["username", "password", "website"], tablefmt="psql"))
 
 if __name__ == "__main__":
-    edit(1, password="mypasswd")
+    edit(1, username="MyUsername", password="mypasswd")
