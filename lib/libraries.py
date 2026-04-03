@@ -1,4 +1,3 @@
-# Insertion and entering
 import sys
 import pymysql
 from dotenv import load_dotenv
@@ -18,6 +17,7 @@ try:
         host="localhost",
         database=db_database
     )
+
 except Exception:
     print("you suck! run mariadb or mysql server!")
     sys.exit(1)
@@ -117,7 +117,32 @@ def search(search):
     
     results = curr.fetchall()
 
-    print(tabulate(results, headers=["username", "password", "website"], tablefmt="psql"))
+    print(tabulate(results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
+
+def results(username, password, website):
+        sql =  """ SELECT *
+        FROM passwords
+        WHERE username=%s and website=%s and password=%s;
+        """
+
+        curr.execute(sql, (username, website, password))
+
+        results = curr.fetchall()
+
+        print("\njob Results:")
+        print(tabulate(results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
+
+
+def showall():
+    sql =  f""" SELECT *
+        FROM passwords
+        """
+    
+    curr.execute(sql)
+    
+    results = curr.fetchall()
+
+    print(tabulate(results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
 
 if __name__ == "__main__":
     edit(1, username="MyUsername", password="mypasswd")

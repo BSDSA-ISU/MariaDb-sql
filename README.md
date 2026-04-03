@@ -48,7 +48,7 @@ pip install -r requirements.txt
 ### Windows and Linux: using uv(recommended)
 
 ```ps1
-uv run main
+uv run main.py
 ```
 
 ### Windows: using python
