@@ -57,15 +57,54 @@ def delete(ID : int):
     conn.commit()
     print(f"Deleted {curr.rowcount} row(s).")
 
-def edit():
-    print("soon lol")
-    
-    """
-    UPDATE table_name
-SET column1 = 'new_value', column2 = 'new_value'
-WHERE id_column = 123;
+def edit(id : int, username = "None", password = "None", website = "None"):
 
+    edits = """
+    UPDATE passwords
+        SET username = %s, password = %s, website = %s
+        WHERE id = %s;
     """
+        
+    sql =  f""" SELECT *
+        FROM passwords
+        WHERE id %s;
+        """
+    
+    curr.execute(sql, (id,))
+    
+    results = curr.fetchone()
+
+    default_user = results[1]
+    default_password = results[2]
+    default_website = results[3]
+
+    if username == "None":
+        username = default_user
+    if password == "None":
+        password = default_password
+    if website == "None":
+        website = default_website   
+
+    if username == default_user and password == default_password and website == default_website:
+        username = input("Insert new username(Leave blank for default)\n>>")
+        if username == "":
+            username = default_user
+
+        password = input("Insert new username(leave blank for default)\n>>")
+        if password == "":
+            password = default_password
+
+        website = input("Insert new username(leave blank for default)\n>>")
+        if website == "":
+            website = default_website
+    
+    try:
+        curr.execute(edits, (username, password, website, id))
+        conn.commit()
+        print("edited..")
+    except Exception:
+        print("error...")
+
 
 def search(search):
     sql =  f""" SELECT *
@@ -80,4 +119,4 @@ def search(search):
     print(tabulate(results, headers=["username", "password", "website"], tablefmt="psql"))
 
 if __name__ == "__main__":
-    search("a")
+    edit(1, password="mypasswd")
