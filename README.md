@@ -3,16 +3,17 @@
 - [:lock: SQL password manager](#lock-sql-password-manager)
   - [:apple: Simple password manager via Mysql and Mariadb server](#apple-simple-password-manager-via-mysql-and-mariadb-server)
   - [Installation](#installation)
-    - [:window: :linux: Windows and Linux: Using uv(recommended)](#window-linux-windows-and-linux-using-uvrecommended)
+    - [:window: :penguin: Windows and Linux: Using uv(recommended)](#window-penguin-windows-and-linux-using-uvrecommended)
     - [:penguin: Linux: using pip](#penguin-linux-using-pip)
     - [:window: Windows: using pip](#window-windows-using-pip)
   - [Running](#running)
-    - [:window: :penguin: Windows and Linux: using uv(recommended)](#window-penguin-windows-and-linux-using-uvrecommended)
+    - [:window: :penguin: Windows and Linux: using uv(recommended)](#window-penguin-windows-and-linux-using-uvrecommended-1)
     - [:window: Windows: using python](#window-windows-using-python)
     - [:penguin: Linux: using python](#penguin-linux-using-python)
   - [:warning: Important: It is highly recommended that you set a user and password on your SQL/MariaDB server before running the manager](#warning-important-it-is-highly-recommended-that-you-set-a-user-and-password-on-your-sqlmariadb-server-before-running-the-manager)
     - [If your server is still not configured, follow these steps](#if-your-server-is-still-not-configured-follow-these-steps)
   - [:question: What if I'm using sqlite instead?](#question-what-if-im-using-sqlite-instead)
+  - [:books: Additional Resources](#books-additional-resources)
 
 ## :apple: Simple password manager via Mysql and Mariadb server
 
@@ -20,7 +21,7 @@
 
 ## Installation
 
-### :window: :linux: Windows and Linux: Using [uv](https://github.com/astral-sh/uv)(recommended)
+### :window: :penguin: Windows and Linux: Using [uv](https://github.com/astral-sh/uv)(recommended)
 
 ```bash
 uv sync
@@ -128,6 +129,16 @@ This way its:
 ## :question: What if I'm using sqlite instead?
 
 Then good for you, its already secured, just don't loose your key
+
+---
+
+## :books: Additional Resources
+
+- [The Python programming language](https://www.python.org/)
+  - [pymysql library documentation](https://pymysql.readthedocs.io/en/latest/)
+- [Mariadb Resources](https://mariadb.org/)
+- [xampp manager](https://www.apachefriends.org/)
+- [Mysql Community Server](https://dev.mysql.com/downloads/mysql/8.0.html)
 
 ---
 
