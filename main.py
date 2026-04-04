@@ -1,6 +1,8 @@
 # Semi working main.py, love from Koishi Komeiji
 
-from lib.libraries import insert, delete, edit, search, showall, results
+from lib.libraries import SqlServer
+
+sql: SqlServer = SqlServer()
 
 def main():
     while True:
@@ -23,9 +25,9 @@ def main():
                 website = input("enter website\n>>")
                 password = input("enter password\n>>")
 
-                insert(username=username, password=password, website=website)
+                sql.insert(username=username, password=password, website=website)
 
-                results(username, password, website)
+                sql.results(username, password, website)
 
                 x = str(input("success.. you want to enter again(y/n)?"))
 
@@ -42,12 +44,12 @@ def main():
 
             while Terminator:
                 print("\nList of all passwords:")
-                showall()
+                sql.showall()
 
                 try:
                     id = int(input("Enter a row id to delete(type nothing to exit)\n>>"))
 
-                    delete(id)
+                    sql.delete(id)
 
                 except Exception:
                     print("exiting...")
@@ -60,7 +62,7 @@ def main():
                     Terminator = False
 
         elif choice == '3':
-            showall()
+            sql.showall()
             id = int(input("\nChoose the id to edit\n>>"))
 
             print("\ninput. Enter provided fields. leave blank so it will not change\n")
@@ -75,15 +77,15 @@ def main():
             if website == '':
                 password = None
 
-            edit(id=id, username=username, password=password, website=website)
+            sql.edit(id=id, username=username, password=password, website=website)
 
         elif choice == '4':
             print("Search saved password using a website\n")
             query = input("search query\n>>")
-            search(query)
+            sql.search(search=query)
 
         elif choice == '5':
-            showall()
+            sql.showall()
 
         elif choice == '6':
             print("Exiting...")
@@ -91,14 +93,6 @@ def main():
 
         else:
             print("Invalid choice. Please try again.")
-
-class myclass():
-
-    public:
-
-        def __init__(self) -> None:
-            print("Hello world")
-
 
 if __name__ == "__main__":
     main()

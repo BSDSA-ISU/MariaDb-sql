@@ -1,3 +1,4 @@
 DB_USER="sql username"
 DB_PASS="sql password"
 DB_DATABASE="sql database name"
+DB_SERVER="sqlite"
