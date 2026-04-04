@@ -4,11 +4,11 @@ from dotenv import load_dotenv
 import os
 from tabulate import tabulate
 
-load_dotenv()
+_ = load_dotenv()
 
-db_user = os.getenv("DB_USER")
-db_password = os.getenv("DB_PASS")
-db_database = os.getenv("DB_DATABASE")
+db_user = os.getenv("DB_USER", "root")
+db_password = os.getenv("DB_PASS", "")
+db_database = os.getenv("DB_DATABASE", "passwords")
 
 try:
     conn = pymysql.connect(
@@ -33,28 +33,31 @@ sql_init = """
              );
 """
 
-curr.execute(sql_init)
+_ = curr.execute(sql_init)
 
 conn.commit()
 
-def insert(username, password, website):
+def insert(username : str, password : str, website : str) -> None:
     sql = """
         INSERT INTO passwords 
         VALUES (NULL, %s, %s, %s);
      """
     
-    curr.execute(sql, (username, password, website))
+    _ = curr.execute(sql, (username, password, website))
 
     conn.commit()
 
 def delete(ID : int):
     sql = "DELETE FROM passwords WHERE id = %s"
-    curr.execute(sql, (ID,))
+    
+    _ = curr.execute(sql, (ID,))
 
     conn.commit()
     print(f"Deleted {curr.rowcount} row(s).")
 
-def edit(id : int, username = None, password = None, website = None):
+def edit(id : int, username: str | None = None ,
+    password : str | None = None,
+    website : str | None = None):
 
     edits = """
     UPDATE passwords
@@ -67,17 +70,17 @@ def edit(id : int, username = None, password = None, website = None):
         WHERE id=%s;
         """
     
-    curr.execute(sql, (id,))
+    _ = curr.execute(sql, (id,))
     
-    results = curr.fetchone()
+    results = str(curr.fetchone())
 
-    if results is None:
+    if results == "None":
         print("no such id.. try again")
         return
 
-    default_user = results[1]
-    default_password = results[2]
-    default_website = results[3]
+    default_user = str(results[1])
+    default_password = str(results[2])
+    default_website = str(results[3])
 
     if username is None:
         username = default_user
@@ -100,32 +103,32 @@ def edit(id : int, username = None, password = None, website = None):
             website = default_website
     
     try:
-        curr.execute(edits, (username, password, website, id))
         conn.commit()
-        print("edited..")
+        print("\nedited..")
+        _ = curr.execute(edits, (username, password, website, id))
     except Exception:
         print("error...")
 
 
-def search(search):
+def search(search : str):
     sql =  f""" SELECT *
         FROM passwords
         WHERE website LIKE %s;
         """
     
-    curr.execute(sql, (f"%{search}%",))
+    _ = curr.execute(sql, (f"%{search}%",))
     
     results = curr.fetchall()
 
     print(tabulate(results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
 
-def results(username, password, website):
+def results(username : str, password : str, website : str):
         sql =  """ SELECT *
         FROM passwords
         WHERE username=%s and website=%s and password=%s;
         """
 
-        curr.execute(sql, (username, website, password))
+        _ = curr.execute(sql, (username, website, password))
 
         results = curr.fetchall()
 
@@ -138,7 +141,7 @@ def showall():
         FROM passwords
         """
     
-    curr.execute(sql)
+    _ = curr.execute(sql)
     
     results = curr.fetchall()
 
