@@ -27,10 +27,10 @@ def main():
 
                 results(username, password, website)
 
-                x= str(input("success.. you want to enter again(y/n)?"))
+                x = str(input("success.. you want to enter again(y/n)?"))
 
                 if x.upper() == "Y":
-                    terminater == True
+                    continue
                 else:
                     terminater = False
 
@@ -91,6 +91,14 @@ def main():
 
         else:
             print("Invalid choice. Please try again.")
+
+class myclass():
+
+    public:
+
+        def __init__(self) -> None:
+            print("Hello world")
+
 
 if __name__ == "__main__":
     main()
