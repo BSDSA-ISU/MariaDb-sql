@@ -1,10 +1,19 @@
 # Semi working main.py, love from Koishi Komeiji
-
 from lib.libraries import SqlServer
+from lib.sqlitelib import local
+from dotenv import load_dotenv
+import os
 
-sql: SqlServer = SqlServer()
+_ = load_dotenv()
 
-def main():
+print("Using: ", os.getenv("DB_SERVER", "sqlite"), "\n")
+
+if os.getenv("DB_SERVER", "sqlite") == "sqlite":
+    sql= local()
+else:
+    sql = SqlServer()
+
+def main() -> None:
     while True:
         print("1. input")
         print("2. Delete")

@@ -1,50 +1,29 @@
-from typing import LiteralString, final
-from pymysql import connect
-from pymysql.cursors import Cursor
-import sys
-from dotenv import load_dotenv
-import os
+from sqlite3 import Connection, Cursor, connect
+from typing import LiteralString
 from tabulate import tabulate
 
-_ = load_dotenv()
-
-db_user = os.getenv("DB_USER", "root")
-db_password = os.getenv("DB_PASS", "")
-db_database = os.getenv("DB_DATABASE", "passwords")
-
-@final
-class SqlServer:
+class local:
     def __init__(self) -> None:
-        try:
-            self.conn = connect(
-                user=db_user,
-                password=db_password,
-                host="localhost",
-                database=db_database
-            )
-
-        except Exception:
-            print("you suck! run mariadb or mysql server!")
-            sys.exit(1)
+        self.conn: Connection = connect(database="./localserver/passwords.db")
 
         self.curr: Cursor = self.conn.cursor()
 
         sql_init = """
                      CREATE TABLE IF NOT EXISTS passwords (
-                     id INT AUTO_INCREMENT PRIMARY KEY,
+                     id INTEGER PRIMARY KEY,
                      username varchar(255),
                      password varchar(255),
                      website varchar(255)
                      );
         """
 
-        _ = self.curr.execute(query=sql_init)
+        _ = self.curr.execute(sql_init)
         self.conn.commit()
 
     def insert(self, username : str, password : str, website : str) -> None:
         sql = """
             INSERT INTO passwords 
-            VALUES (NULL, %s, %s, %s);
+            VALUES (NULL, ?, ?, ?);
          """
 
         _ = self.curr.execute(sql, (username, password, website))
@@ -52,7 +31,7 @@ class SqlServer:
         self.conn.commit()
 
     def delete(self, ID : int):
-        sql = "DELETE FROM passwords WHERE id = %s"
+        sql = "DELETE FROM passwords WHERE id = ?"
 
         _ = self.curr.execute(sql, (ID,))
 
@@ -65,18 +44,18 @@ class SqlServer:
 
         edits = """
         UPDATE passwords
-            SET username = %s, password = %s, website = %s
-            WHERE id = %s;
+            SET username = ?, password = ?, website = ?
+            WHERE id = ?;
         """
 
         sql =  """ SELECT *
             FROM passwords
-            WHERE id=%s;
+            WHERE id=?;
             """
 
         _ = self.curr.execute(sql, (id,))
 
-        results = str(self.curr.fetchone())
+        results = str(self.curr.fetchone())  # pyright: ignore[reportAny]
 
         if results == "None":
             print("no such id.. try again")
@@ -117,10 +96,10 @@ class SqlServer:
     def search(self, search : str) -> None:
         sql =  f""" SELECT *
             FROM passwords
-            WHERE website LIKE %s;
+            WHERE website LIKE ?;
             """
 
-        _ = self.curr.execute(query=sql, args=(f"%{search}%",))
+        _ = self.curr.execute(sql, (f"%{search}%",))
 
         results = self.curr.fetchall()
 
@@ -129,10 +108,10 @@ class SqlServer:
     def results(self, username : str, password : str, website : str):
             sql =  """ SELECT *
             FROM passwords
-            WHERE username=%s and website=%s and password=%s;
+            WHERE username=? and website=? and password=?;
             """
 
-            _ = self.curr.execute(query=sql, args=(username, website, password))
+            _ = self.curr.execute(sql, (username, website, password))
 
             results = self.curr.fetchall()
 
@@ -144,8 +123,13 @@ class SqlServer:
             FROM passwords
             """
 
-        _ = self.curr.execute(query=sql)
+        _ = self.curr.execute(sql)
 
         results = self.curr.fetchall()
 
         print(tabulate(tabular_data=results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
+
+if __name__ == "__main__":
+    x: local = local()
+    x.insert("x", "y", "z")
+    x.showall()
