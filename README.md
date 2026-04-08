@@ -17,7 +17,7 @@
 
 ## :apple: Simple password manager via Mysql and Mariadb server
 
-[Demo](https://github.com/BSDSA-ISU/MariaDb-sql/raw/refs/heads/main/passwd.webm)
+[Demo](https://github.com/user-attachments/assets/16eff880-54aa-4df6-9879-e481799d9b8c)
 
 ---
 
