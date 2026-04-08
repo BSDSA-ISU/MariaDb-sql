@@ -34,20 +34,28 @@ class SqlServer:
                      id INT AUTO_INCREMENT PRIMARY KEY,
                      username varchar(255),
                      password varchar(255),
-                     website varchar(255)
+                     website varchar(255),
+                     comment varchar(255)
                      );
         """
 
         _ = self.curr.execute(query=sql_init)
         self.conn.commit()
 
-    def insert(self, username : str, password : str, website : str) -> None:
-        sql = """
+    def insert(self, username : str, password : str, website : str, comment : str) -> None:
+
+        if comment == '':
+            sql = """
             INSERT INTO passwords 
             VALUES (NULL, %s, %s, %s);
-         """
-
-        _ = self.curr.execute(sql, (username, password, website))
+            """
+            _ = self.curr.execute(sql, (username, password, website))
+        else:
+            sql = """
+            INSERT INTO passwords 
+            VALUES (NULL, %s, %s, %s, %s);
+            """
+            _ = self.curr.execute(sql, (username, password, website, comment))
 
         self.conn.commit()
 
@@ -59,13 +67,14 @@ class SqlServer:
         self.conn.commit()
         print(f"Deleted {self.curr.rowcount} row(s).")
 
-    def edit(self, id : int, username: str | None = None ,
-        password : str | None = None,
-        website : str | None = None):
+    def edit(self, id : int, username = None,
+        password = None,
+        website = None,
+        comment = None):
 
         edits = """
         UPDATE passwords
-            SET username = %s, password = %s, website = %s
+            SET username = %s, password = %s, website = %s, comment = %s
             WHERE id = %s;
         """
 
@@ -76,40 +85,34 @@ class SqlServer:
 
         _ = self.curr.execute(sql, (id,))
 
-        results = str(self.curr.fetchone())
+        results = self.curr.fetchone()
+        print(type(results))
 
         if results == "None":
             print("no such id.. try again")
             return
 
-        default_user = str(results[1])
-        default_password = str(results[2])
-        default_website = str(results[3])
+        
 
-        if username is None:
+        default_user = results[1]  # pyright: ignore[reportOptionalSubscript]
+        default_password = results[2]  # pyright: ignore[reportOptionalSubscript]
+        default_website = results[3]  # pyright: ignore[reportOptionalSubscript]
+        default_comment = results[4]  # pyright: ignore[reportOptionalSubscript]
+
+        if username is None or username == '':
             username = default_user
-        if password is None:
+        if password is None or password == '':
             password = default_password
-        if website is None:
-            website = default_website   
-
-        if username is default_user and password is default_password and website is default_website:
-            username = input("Insert new username(Leave blank for default)\n>>")
-            if username == "":
-                username = default_user
-
-            password = input("Insert new username(leave blank for default)\n>>")
-            if password == "":
-                password = default_password
-
-            website = input("Insert new username(leave blank for default)\n>>")
-            if website == "":
-                website = default_website
+        if website is None or website == '':
+            website = default_website
+        if comment is None or comment == '':
+            comment = default_comment 
 
         try:
-            self.conn.commit()
             print("\nedited..")
-            _ = self.curr.execute(edits, (username, password, website, id))
+            _ = self.curr.execute(edits, (username, password, website, comment, id))
+            self.conn.commit()
+            self.results(username, password, website)  # pyright: ignore[reportArgumentType]
         except Exception:
             print("error...")
 
@@ -124,7 +127,7 @@ class SqlServer:
 
         results = self.curr.fetchall()
 
-        print(tabulate(results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
+        print(tabulate(results, headers=["ID", "username", "password", "website", "comment"], tablefmt="psql"))
 
     def results(self, username : str, password : str, website : str):
             sql =  """ SELECT *
@@ -148,4 +151,4 @@ class SqlServer:
 
         results = self.curr.fetchall()
 
-        print(tabulate(tabular_data=results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
+        print(tabulate(tabular_data=results, headers=["ID", "username", "password", "website", "comment"], tablefmt="psql"))

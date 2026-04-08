@@ -1,7 +1,8 @@
 # Semi working main.py, love from Koishi Komeiji
-from lib.libraries import SqlServer
 from lib.sqlitelib import local
+from lib.migratedb import migrate
 from dotenv import load_dotenv
+from lib.libraries import SqlServer
 import os
 
 _ = load_dotenv()
@@ -22,7 +23,8 @@ def main() -> None:
         print("3. Edit")
         print("4. Search")
         print("5. Showall")
-        print("6. exit")
+        print("6. Migrate")
+        print("7. exit")
 
         choice = input("Enter your choice: ")
 
@@ -35,8 +37,9 @@ def main() -> None:
                 username = input("enter username/email\n>>")
                 website = input("enter website\n>>")
                 password = input("enter password\n>>")
+                comment_note = input("comments\n>>")
 
-                sql.insert(username=username, password=password, website=website)
+                sql.insert(username=username, password=password, website=website, comment=comment_note)  # pyright: ignore[reportCallIssue]
 
                 sql.results(username, password, website)
 
@@ -80,15 +83,9 @@ def main() -> None:
             username = input("enter username/email\n>>")
             website = input("enter website\n>>")
             password = input("enter password\n>>")
+            comment = input("comments\n>>")
 
-            if username == "":
-                username = None
-            if password == "":
-                password = None
-            if website == '':
-                password = None
-
-            sql.edit(id=id, username=username, password=password, website=website)
+            sql.edit(id=id, username=username, password=password, website=website, comment=comment)  # pyright: ignore[reportCallIssue]
 
         elif choice == '4':
             print("Search saved password using a website\n")
@@ -99,6 +96,9 @@ def main() -> None:
             sql.showall()
 
         elif choice == '6':
+          migrate()  
+
+        elif choice == '7':
             print("Exiting...")
             break
 
