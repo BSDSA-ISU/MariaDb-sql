@@ -6,9 +6,11 @@ import os
 
 _ = load_dotenv()
 
-print("Using: ", os.getenv("DB_SERVER", "sqlite"), "\n")
+sql_type = os.getenv("DB_SERVER", "sqlite")
 
-if os.getenv("DB_SERVER", "sqlite") == "sqlite":
+print("Using Server:", sql_type, "\n")
+
+if sql_type == "sqlite" or sql_type == "local":
     sql= local()
 else:
     sql = SqlServer()

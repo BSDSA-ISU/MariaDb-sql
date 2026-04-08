@@ -17,6 +17,8 @@
 
 ## :apple: Simple password manager via Mysql and Mariadb server
 
+[Demo](https://github.com/BSDSA-ISU/MariaDb-sql/raw/refs/heads/main/passwd.webm)
+
 ---
 
 ## Installation
@@ -118,6 +120,7 @@ You can sneak that in as a **warning/note right before users run the app**, so t
     ```env
     DB_USER=youruser
     DB_PASS=yourpassword
+    DB_SERVER="mysql or mariadb"
     ```
 
 This way its:

@@ -1,7 +1,7 @@
 [project]
 name = "mariadbExpeiment"
 version = "0.1.0"
-description = "Add your description here"
+description = "Pasword manager working in sqlite3 mariadb and mysql"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
