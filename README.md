@@ -131,7 +131,7 @@ This way its:
 
 ## :question: What if I'm using sqlite instead?
 
-Then good for you, its already secured, just don't loose your key
+Then good for you, No need to add username passwords on sql
 
 ---
 
