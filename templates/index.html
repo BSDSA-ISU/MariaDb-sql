@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    <title>Password Manager</title>
+</head>
+<body>
+    
+<header class="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <img src="/static/logo.png" style="border-radius: 50%;">
+            <span>Passwords</span>
+        </div>
+
+        <nav>
+            <div class="dropdown">
+              <button class="dropbtn">Menu</button>
+              <div class="dropdown-content">
+                <a href="https://github.com/BSDSA-ISU/MariaDb-sql">Github Link</Link:css></a>
+              </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <section class="hero">
+        <h1 id="home">Welcome to Password Manager</h1>
+        <img class="mascot" src="/static/koishi-komeiji-dance.gif">
+        <p>{{ hello }}</p>
+    </section>
+</main>
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search website...">
+    <span class="search-icon">🔍</span>
+</div>
+
+<!-- Give the grid an ID so JS can find it -->
+<div class="account-grid" id="accountGrid">
+    {% include 'parts/account_list.html' %}
+</div>
+
+
+<script>
+const searchInput = document.getElementById('searchInput');
+const accountGrid = document.getElementById('accountGrid');
+
+searchInput.addEventListener('input', (e) => {
+    const query = e.target.value;
+    
+    // Fetch results from the backend
+    fetch(`/search?q=${query}`)
+        .then(response => response.text())
+        .then(html => {
+            accountGrid.innerHTML = html;
+        });
+});
+</script>
+
+</body>
+</html>

@@ -117,7 +117,7 @@ class SqlServer:
             print("error...")
 
 
-    def search(self, search : str) -> None:
+    def search(self, search : str):
         sql =  f""" SELECT *
             FROM passwords
             WHERE website LIKE %s;
@@ -128,6 +128,8 @@ class SqlServer:
         results = self.curr.fetchall()
 
         print(tabulate(results, headers=["ID", "username", "password", "website", "comment"], tablefmt="psql"))
+
+        return results
 
     def results(self, username : str, password : str, website : str):
             sql =  """ SELECT *
@@ -142,7 +144,7 @@ class SqlServer:
             print("\njob Results:")
             print(tabulate(results, headers=["ID", "username", "password", "website"], tablefmt="psql"))
 
-    def showall(self) -> None:
+    def showall(self):
         sql: LiteralString =  f""" SELECT *
             FROM passwords
             """
@@ -152,3 +154,4 @@ class SqlServer:
         results = self.curr.fetchall()
 
         print(tabulate(tabular_data=results, headers=["ID", "username", "password", "website", "comment"], tablefmt="psql"))
+        return results

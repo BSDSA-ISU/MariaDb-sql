@@ -1,0 +1,25 @@
+{% for item in lists %}
+<div class="card account-card">
+    <div class="card-header">
+        <span class="web-label">{{ item[3] }}</span>
+        <span class="id-badge">#{{ item[0] }}</span>
+    </div>
+    <div class="card-body">
+        <div class="info-row">
+            <span class="label">User:</span>
+            <span class="value">{{ item[1] }}</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Pass:</span>
+            <span class="value password-mask">••••••••</span>
+        </div>
+        {% if item[4] %}
+        <div class="comment-box"><p>{{ item[4] }}</p></div>
+        {% endif %}
+    </div>
+    <div class="card-actions">
+        <button class="explore-btn">Copy</button>
+        <button class="small-delete-btn">Delete</button>
+    </div>
+</div>
+{% endfor %}
