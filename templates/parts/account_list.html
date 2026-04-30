@@ -17,8 +17,12 @@
         <div class="comment-box"><p>{{ item[4] }}</p></div>
         {% endif %}
     </div>
+<!-- Inside your loop -->
     <div class="card-actions">
-        <button class="explore-btn">Copy</button>
+        <!-- The secret sauce is the data-password attribute -->
+        <button class="explore-btn copy-btn" data-password="{{ item[2] }}">
+            <span>📋</span> Copy
+        </button>
         <button class="small-delete-btn">Delete</button>
     </div>
 </div>

@@ -60,6 +60,30 @@ searchInput.addEventListener('input', (e) => {
             accountGrid.innerHTML = html;
         });
 });
+
+document.addEventListener('click', function (e) {
+    // Check if the clicked element (or its parent) is the copy button
+    const btn = e.target.closest('.copy-btn');
+    
+    if (btn) {
+        const password = btn.getAttribute('data-password');
+        
+        // Use the Clipboard API
+        navigator.clipboard.writeText(password).then(() => {
+            // Visual feedback: change button text temporarily
+            const originalText = btn.innerHTML;
+            btn.innerHTML = "<span>✅</span> Copied!";
+            btn.style.background = "#15803d"; // Darker green feedback
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = ""; // Revert to CSS variable
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+});
 </script>
 
 </body>
