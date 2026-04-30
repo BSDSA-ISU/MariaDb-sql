@@ -1,5 +1,7 @@
 # :lock: SQL password manager
 
+![Koishi](/static/koishi-komeiji-dance.gif)
+
 - [:lock: SQL password manager](#lock-sql-password-manager)
   - [:apple: Simple password manager via Mysql and Mariadb server](#apple-simple-password-manager-via-mysql-and-mariadb-server)
   - [Installation](#installation)
@@ -7,6 +9,7 @@
     - [:penguin: Linux: using pip](#penguin-linux-using-pip)
     - [:window: Windows: using pip](#window-windows-using-pip)
   - [Running](#running)
+    - [🪟: 🐧 : Flask gui (stil testing)](#---flask-gui-stil-testing)
     - [:window: :penguin: Windows and Linux: using uv(recommended)](#window-penguin-windows-and-linux-using-uvrecommended-1)
     - [:window: Windows: using python](#window-windows-using-python)
     - [:penguin: Linux: using python](#penguin-linux-using-python)
@@ -27,6 +30,8 @@
 
 ```bash
 uv sync
+
+uv run main.py
 ```
 
 ### :penguin: Linux: using pip
@@ -50,6 +55,12 @@ pip install -r requirements.txt
 ```
 
 ## Running
+
+### 🪟: 🐧 : Flask gui (stil testing)
+
+```sh
+uv run main.py
+```
 
 ### :window: :penguin: Windows and Linux: using uv(recommended)
 
