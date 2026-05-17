@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Athlete System</title>
+
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="/static/logo.png" style="border-radius: 50%;">
+                <span>Login Portal</span>
+            </div>
+
+            <nav>
+                <a href="/" class="basicbutton">Home</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Kept structure: container -> card -> hero -> form -->
+    <div class="container" style="max-width: 450px; margin-top: 80px;"> 
+        <section class="card" style="border-top: 4px solid var(--accent);">
+            <div class="hero" style="padding-bottom: 20px;">
+                <h1 style="font-size: 2rem;">Hello there!</h1>
+                <p>Koishi Komeiji is soooo Cute</p>
+            </div>
+
+            <form method="POST" class="form">
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 5px;">Username</label>
+                    <input name="username" placeholder="Enter username..." required style="width: 100%;">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 5px;">Password</label>
+                    <input name="password" type="password" placeholder="••••••••" required style="width: 100%;">
+                </div>
+                
+                <button type="submit" style="width: 100%; padding: 14px;">Login</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                <div style="margin-top: 25px;">
+                  {% for cat, msg in messages %}
+                    <!-- Modernized Flash Message Style -->
+                    <div class="instruction-box" style="padding: 12px; border-radius: 8px; text-align: center; border-left-color: #ef4444; background: rgba(239, 68, 68, 0.1);">
+                        <span style="color: #f87171; font-size: 0.9rem; font-weight: bold;">{{ msg }}</span>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+        </section>
+    </div>
+
+</body>
+
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('error') === 'admins_only') {
+    alert("🚫 Admins only!");
+}
+</script>
+
+</html>
