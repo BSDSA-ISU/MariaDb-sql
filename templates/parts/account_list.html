@@ -1,30 +1,30 @@
 {% for item in lists %}
 <div class="card account-card">
     <div class="card-header">
-        <span class="web-label">{{ item[3] }}</span>
+        <span class="web-label">{{ item[4] }}</span>
         <span class="id-badge">#{{ item[0] }}</span>
     </div>
     <div class="card-body">
         <div class="info-row">
             <span class="label">User:</span>
-            <span class="value">{{ item[1] }}</span>
+            <span class="value">{{ item[2] }}</span>
         </div>
         <div class="info-row">
             <span class="label">Pass:</span>
             <span class="value password-mask">••••••••</span>
         </div>
-        {% if item[4] %}
-        <div class="comment-box"><p>{{ item[4] }}</p></div>
+        {% if item[5] %}
+        <div class="comment-box"><p>{{ item[5] }}</p></div>
         {% endif %}
     </div>
 <!-- Inside your loop -->
     <div class="card-actions">
         <!-- The secret sauce is the data-password attribute -->
-        <button class="explore-btn copy-btn" data-password="{{ item[2] }}">
+        <button class="explore-btn copy-btn" data-password="{{ item[3] }}">
             <span>📋</span> Copy
         </button>
         <button class="small-delete-btn">Delete</button>
-        <button class="small-edit-btn" onclick="window.location.href='https://www.example.com';">Edit</button>
+        <button class="small-edit-btn" onclick="window.location.href='/edit/{{ item[0] }}';">Edit</button>
     </div>
 </div>
 {% endfor %}

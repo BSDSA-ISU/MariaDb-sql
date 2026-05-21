@@ -171,6 +171,16 @@ input:focus, select:focus, textarea:focus {
     cursor: pointer;
 }
 
+.small-edit-btn {
+    background: rgba(239, 68, 68, 0.1);
+    color: #001efffc;
+    border: 1px solid rgba(75, 117, 255, 0.2);
+    border-radius: 8px;
+    padding: 4px 8px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
 /* FOOTER */
 footer {
     margin-top: 40px;
@@ -219,16 +229,20 @@ footer a {
     box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 }
 
-/* DROPDOWN */
+/* \DROPDOWN */
 .dropbtn {
   background-color: transparent;
   color: var(--accent); /* Updated from purple */
   font-size: 16px;
   border: none;
   cursor: pointer;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
+  right: 0%;
+  transform: translateX(-50%);
   display: none;
   position: absolute;
   background-color: #112216;
@@ -395,7 +409,7 @@ hr {
 
 /* ADDING A "RESULTS COUNT" BADGE (Optional) */
 .search-container::after {
-    content: 'KOISHI-SCAN v1.0';
+    content: 'KOISHI-SCAN';
     position: absolute;
     right: 15px;
     bottom: -22px;
@@ -404,4 +418,31 @@ hr {
     color: var(--accent);
     opacity: 0.6;
     letter-spacing: 1px;
+}
+
+/* 9. Footer */
+.footer {
+    margin-top: 100px;
+    border-top: 1px solid var(--border);
+    background: rgba(2, 6, 23, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+/* BOTTOM: centered footer */
+.footer-bottom {
+    text-align: center;
+    padding: 15px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+
+/* BOTTOM: centered */
+.footer-bottom {
+    padding: 15px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.85rem;
 }

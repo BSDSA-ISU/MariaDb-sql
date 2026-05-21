@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Password Entry</title>
+
+    <!-- Your CSS -->
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                🔐 Vault Editor
+            </div>
+
+            <nav>
+                <a href="/">Home</a>
+                <a href="/passwords">Passwords</a>
+                <a href="/logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+            <h1>Add Password Entry</h1>
+            <p>Store new credentials safely in your vault.</p>
+        </section>
+
+        <!-- CARD -->
+        <section class="card">
+
+            <!-- FLASH MESSAGE -->
+            {% if message %}
+            <div class="instruction-box" style="margin-bottom: 20px;">
+                {{ message }}
+            </div>
+            {% endif %}
+
+            <!-- FORM -->
+            <form method="POST" class="form">
+
+                <!-- WEBSITE -->
+                <div>
+                    <label for="website">Website</label>
+                    <input 
+                        type="text"
+                        id="website"
+                        name="website"
+                        placeholder="example.com"
+                        required
+                    >
+                </div>
+
+                <!-- USERNAME -->
+                <div>
+                    <label for="username">Username / Email</label>
+                    <input 
+                        type="text"
+                        id="username"
+                        name="username"
+                        placeholder="username"
+                        required
+                    >
+                </div>
+
+                <!-- PASSWORD -->
+                <div>
+                    <label for="password">Password</label>
+                    <input 
+                        type="text"
+                        id="password"
+                        name="password"
+                        placeholder="password"
+                        required
+                    >
+                </div>
+
+                <!-- COMMENT -->
+                <div>
+                    <label for="comment">Comment</label>
+                    <textarea 
+                        id="comment"
+                        name="comment"
+                        rows="5"
+                        placeholder="Optional notes... Defaults to 'My important password'"
+                    ></textarea>
+                </div>
+
+                <!-- BUTTONS -->
+                <div style="display:flex; gap:10px; margin-top:10px;">
+
+                    <button type="submit">
+                        Add Entry
+                    </button>
+
+                    <a href="/passwords" class="project-btn secondary">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer-bottom">
+        <p>
+            Koishi Vault • Password Manager
+        </p>
+    </footer>
+
+</body>
+</html>
