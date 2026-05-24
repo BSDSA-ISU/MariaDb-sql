@@ -146,6 +146,8 @@ Then good for you, No need to add username passwords on sql
 
 ---
 
+## contributors
+
 <a href="https://github.com/BSDSA-ISU/MariaDb-sql/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=BSDSA-ISU/MariaDb-sql" />
 </a>
