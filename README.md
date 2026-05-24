@@ -146,6 +146,12 @@ Then good for you, No need to add username passwords on sql
 
 ---
 
+<a href="https://github.com/BSDSA-ISU/MariaDb-sql/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=BSDSA-ISU/MariaDb-sql" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
+
 ## :books: Additional Resources
 
 - [The Python programming language](https://www.python.org/)
