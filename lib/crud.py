@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import pymysql
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 _ = load_dotenv()
 
 db_user = os.getenv("DB_USER", "root")
@@ -16,7 +17,7 @@ def connect_db():
         user=db_user,
         password=db_password,
         database=db_database,
-        cursorclass=pymysql.cursors.Cursor,
+        cursorclass=pymysql.cursors.DictCursor,
         autocommit=False
     )
 
@@ -30,21 +31,7 @@ def showall(id):
 
     _ = cur.execute(sql, (id))
     results = cur.fetchall()
-    id = cur.fetchall()
     return results
-
-def fetch_id(id):
-    fetch_entry_id: LiteralString =  """ SELECT id
-        FROM password_entries
-        where id = %s
-        """
-    conn = connect_db()
-    cur = conn.cursor()
-    _ = cur.execute(fetch_entry_id, (id))
-    id = cur.fetchone()
-
-    return id[0]
-
 
 
 def edit(id: int, username=None, password=None,
@@ -65,10 +52,10 @@ def edit(id: int, username=None, password=None,
         return False, "No such ID found."
 
     # Assign existing values if the new ones are missing or empty strings
-    username = username.strip() if username and username.strip() else results[0]
-    password = password.strip() if password and password.strip() else results[1]
-    website = website.strip() if website and website.strip() else results[2]
-    comment = comment.strip() if comment and comment.strip() else results[3]
+    username = username.strip() if username and username.strip() else results.username
+    password = password.strip() if password and password.strip() else results.password
+    website = website.strip() if website and website.strip() else results.website
+    comment = comment.strip() if comment and comment.strip() else results.comment
 
     edits = """
         UPDATE password_entries
