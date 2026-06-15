@@ -5,6 +5,7 @@ import sys
 from dotenv import load_dotenv
 import os
 from tabulate import tabulate
+from pymysql.cursors import DictCursor
 
 _ = load_dotenv()
 
@@ -20,7 +21,8 @@ class SqlServer:
                 user=db_user,
                 password=db_password,
                 host="localhost",
-                database=db_database
+                database=db_database,
+                cursorclass=DictCursor
             )
 
         except Exception as e:
@@ -106,12 +108,12 @@ class SqlServer:
             return False, f"Database error: {str(e)}"
 
     def search(self, search : str):
-        sql =  f""" SELECT *
-            FROM passwords
+        sql =  """ SELECT *
+            FROM password_entries
             WHERE website LIKE %s;
             """
 
-        _ = self.curr.execute(query=sql, args=(f"%{search}%",))
+        self.curr.execute(sql, (f"%{search}%",))
 
         results = self.curr.fetchall()
 

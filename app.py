@@ -120,7 +120,7 @@ def index():
                 print(e)
                 pass
 
-
+        print(dar)
         return render_template("index.html", hello="powered by Koishi Vibes", lists=dar)
         
     else:
@@ -130,7 +130,8 @@ def index():
 def search_accounts():
     query = request.args.get('q', '')
     # Assuming 'db' is your database object instance
-    results = sql.search(query) 
+    results = sql.search(query)
+    
     return render_template("parts/account_list.html", lists=results)
 
 @app.route("/add/<int:id>", methods=["GET", "POST"])
@@ -230,6 +231,7 @@ def open_browser():
 
 #Timer(1, open_browser).start()
 
+"""
 if __name__ == "__main__":
     from waitress import serve
     print("Serving on port 42069...")
@@ -240,4 +242,4 @@ if __name__ == "__main__":
 if __name__ == "__main__":
     app.run(debug=True,port=42069)
 
-"""
+
