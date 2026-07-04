@@ -130,6 +130,16 @@ def search_accounts():
     query = request.args.get('q', '')
     # Assuming 'db' is your database object instance
     results = sql.search(query)
+
+    # Block to return decypted password
+    for items in results:
+        try:
+            x = items['password']
+            raw_password = cipher.decrypt(x.encode()).decode()
+            items['password'] = raw_password
+        except Exception as e:
+            print(e)
+            pass
     
     return render_template("parts/account_list.html", lists=results)
 
