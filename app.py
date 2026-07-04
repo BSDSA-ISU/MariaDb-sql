@@ -120,7 +120,6 @@ def index():
                 print(e)
                 pass
 
-        print(dar)
         return render_template("index.html", hello="powered by Koishi Vibes", lists=dar)
         
     else:
