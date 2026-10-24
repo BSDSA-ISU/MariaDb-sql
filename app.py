@@ -246,8 +246,8 @@ if __name__ == "__main__":
     print("Serving on port 42069...")
     serve(app, host="0.0.0.0", port=42069)
 
-
 """
+
 if __name__ == "__main__":
     app.run(debug=True,port=42069)
 
